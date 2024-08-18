@@ -1,0 +1,152 @@
+body {
+    background-color: #654c68; /* HEX color */
+    color: #ffffff; /* White text for contrast */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-container {
+    max-width: 800px;
+    margin: 75px auto;
+    padding: 60px;
+    background-color: rgba(101, 76, 104, 0.9); /* Semi-transparent background */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header img {
+    width: 50px;
+    height: 50px;
+}
+
+header h1 {
+    font-size: 24px;
+    margin: 10px 0 5px;
+    color: #ffffff;
+}
+
+header p {
+    color: #d8bfd8; /* Light color for the tagline */
+    font-style: italic;
+}
+
+.chatbox {
+    background-color: #ffffff; /* White background for messages */
+    color: #000000; /* Black text for readability */
+    height: 400px;
+    padding: 10px;
+    overflow-y: auto;
+    border-radius: 9px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd; /* Light border to distinguish the box */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.message {
+    max-width: 85%;
+    padding: 10px;
+    border-radius: 11px;
+    margin: 6px 0;
+    position: relative;
+}
+
+chatbox .bot-message {
+    text-align: left;
+    background-color: #ececec;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.chatbox .user-message {
+    text-align: right;
+    background-color: #bde0fe;
+    padding: 5px;
+    border-radius: 5px;
+}
+.message::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+}
+
+.message.user::before {
+    right: -10px;
+    border-left: 10px solid #654c68; /* User message tail */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.message.bot::before {
+    left: -10px;
+    border-right: 10px solid #ffffff; /* Bot message tail */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#userInput {
+    width: calc(100% - 80px);
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: #654c68;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #504155;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #d8bfd8; /* Light color for the footer text */
+}
+
+footer a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.additional-div {
+    width: 100%;
+    background-color: #e1bee7; /* Light purple for the additional div */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-bottom: 20px; /* Space for chat container */
+}
+/* Add this CSS to your existing style.css */
+.go-back-button {
+    background-color: #4CAF50; /* Green background color */
+    color: #ffffff; /* White text color */
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.go-back-button:hover {
+    background-color: #f44336; /* Red background color on hover */
+}
