@@ -9,7 +9,7 @@ body {
 .chat-container {
     max-width: 800px;
     margin: 75px auto;
-    padding: 60px;
+    padding: 20px; /* Reduced padding for small screens */
     background-color: rgba(101, 76, 104, 0.9); /* Semi-transparent background */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -21,13 +21,13 @@ header {
 }
 
 header img {
-    width: 50px;
-    height: 50px;
+    width: 40px; /* Smaller icon for small screens */
+    height: 40px;
 }
 
 header h1 {
-    font-size: 24px;
-    margin: 10px 0 5px;
+    font-size: 20px; /* Reduced font size */
+    margin: 5px 0;
     color: #ffffff;
 }
 
@@ -39,7 +39,7 @@ header p {
 .chatbox {
     background-color: #ffffff; /* White background for messages */
     color: #000000; /* Black text for readability */
-    height: 400px;
+    height: 300px; /* Reduced height for small screens */
     padding: 10px;
     overflow-y: auto;
     border-radius: 9px;
@@ -51,14 +51,14 @@ header p {
 }
 
 .message {
-    max-width: 85%;
+    max-width: 100%; /* Full width for smaller screens */
     padding: 10px;
     border-radius: 11px;
     margin: 6px 0;
     position: relative;
 }
 
-chatbox .bot-message {
+.chatbox .bot-message {
     text-align: left;
     background-color: #ececec;
     padding: 5px;
@@ -71,6 +71,7 @@ chatbox .bot-message {
     padding: 5px;
     border-radius: 5px;
 }
+
 .message::before {
     content: "";
     position: absolute;
@@ -94,7 +95,7 @@ chatbox .bot-message {
 }
 
 #userInput {
-    width: calc(100% - 80px);
+    width: calc(100% - 80px); /* Adjust width for small screens */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -133,7 +134,7 @@ footer a {
     text-align: center;
     margin-bottom: 20px; /* Space for chat container */
 }
-/* Add this CSS to your existing style.css */
+
 .go-back-button {
     background-color: #4CAF50; /* Green background color */
     color: #ffffff; /* White text color */
@@ -150,3 +151,37 @@ footer a {
 .go-back-button:hover {
     background-color: #f44336; /* Red background color on hover */
 }
+
+/* Responsive Design */
+@media screen and (max-width: 600px) {
+    .chat-container {
+        padding: 10px; /* Reduced padding */
+    }
+
+    header img {
+        width: 30px; /* Smaller icon */
+        height: 30px;
+    }
+
+    header h1 {
+        font-size: 18px; /* Reduced font size */
+    }
+
+    header p {
+        font-size: 14px; /* Smaller font size */
+    }
+
+    .chatbox {
+        height: 250px; /* Reduced height */
+    }
+
+    #userInput {
+        width: calc(100% - 60px); /* Adjust width for smaller screens */
+    }
+
+    button {
+        width: 100%; /* Full-width button */
+        padding: 10px;
+    }
+}
+
