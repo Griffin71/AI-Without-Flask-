@@ -7,11 +7,6 @@ const pairs = [
     { pattern: /yes/i, responses: ["Here is his business email: <a href='mailto:linetech@gmail.com'>linetech@gmail.com</a>. For faster job inquiries, go to <a href='https://griffin71.github.io/Line-Tech/' target='_blank'>Line Tech.co</a>"] },
     { pattern: /thanks|thank you|danko|dankie|ta|hola|sure/i, responses: ["My pleasure :)"] },
     { pattern: /bye|goodbye|goodnight/i, responses: ["Goodbye! Take care."] },
-    { pattern: /goodmorning|morning|morgen|goodmorning|good morning/i, responses: ["Good morning, how are you?", "A good morning indeed, how are you this morning?"] },
-    { pattern: /hi|hello|hey|hy/i, responses: ["Hello!", "Hi there!", "Hey!"] },
-    { pattern: /who is your creator\?|tell me about your creator\?|what is griffin's personal email\?|give me your creator's personal details/i, responses: ["I cannot give you my creator's personal information but I can give you his work/business email if you're looking for a job. Are you currently job hunting?"] },
-    { pattern: /i am looking for jobs|any jobs out there\?/i, responses: ["I can help you with job-related inquiries. Are you interested in IT jobs?"] },
-    { pattern: /i want jobs in the it industry|it jobs\?|programmer jobs\?|jobs in it\?|it jobs\?|it jobs\?/i, responses: ["Here is his business email: <a href='mailto:linetech@gmail.com'>linetech@gmail.com</a>. For faster job inquiries, go to <a href='https://griffin71.github.io/Line-Tech/' target='_blank'>Line Tech.co</a>"] },
     { pattern: /my name is (.*)/i, responses: ["Hello %1, How are you today?", "Sure, %1", "Eita %1!", "Ola! %1", "Hi hi hi! %1", "%1, you finally tried me :)"] },
     { pattern: /what is your name\?/i, responses: ["I am Griffin Jr., a chatbot created by Griffin."] },
     { pattern: /how are you\?|wassup\?|dnx\?|dnx|dinsthang\?/i, responses: ["I'm a bot, so I don't have feelings, but thanks for asking! I'm doing great, thank you! How about you?"] },
@@ -20,8 +15,6 @@ const pairs = [
     { pattern: /(.*) created you\?/i, responses: ["Griffin created me."] },
     { pattern: /give me advice/i, responses: ["Always be kind to others. Kindness goes a long way!", "Never stop learning and growing."] },
     { pattern: /quit|bye|goodbye|goodnight|i am off to sleep|lol, goodnight|lol nah bye/i, responses: ["Bye! Take care.", "Goodbye! Have a great day.", "Goodnight!"] },
-    
-    // Unique Features for Testing
     { pattern: /tell me a joke/i, responses: ["Why did the scarecrow win an award? Because he was outstanding in his field!"] },
     { pattern: /tell me another joke/i, responses: ["Why don’t skeletons fight each other? They don’t have the guts."] },
     { pattern: /give me a random fact/i, responses: ["Did you know? Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible."] },
@@ -32,8 +25,6 @@ const pairs = [
     { pattern: /do you have a name/i, responses: ["Yes, I’m Griffin Jr. What can I help you with today?"] },
     { pattern: /tell me a story/i, responses: ["Once upon a time, in a land far away, there was a chatbot named Griffin Jr. who loved to help people and tell stories. What kind of story would you like to hear?"] },
     { pattern: /what's your favorite color/i, responses: ["I don’t have personal preferences, but I’ve heard blue is a popular color among many people. What's your favorite color?"] },
-    
-    // Additional Unique Features
     { pattern: /what's your favorite food/i, responses: ["As a chatbot, I don't eat, but I’ve heard pizza is a favorite for many people. What’s your favorite food?"] },
     { pattern: /do you have any hobbies/i, responses: ["I enjoy chatting and helping users. What are your hobbies?"] },
     { pattern: /what's the time/i, responses: ["I don’t have the ability to check the time, but you can check your device for the current time."] },
@@ -44,79 +35,95 @@ const pairs = [
     { pattern: /what’s the capital of (.*)/i, responses: ["The capital of %1 is a well-known fact. For example, the capital of France is Paris."] },
     { pattern: /give me a quote/i, responses: ["Here's a quote for you: 'The only way to do great work is to love what you do.' - Steve Jobs"] },
     { pattern: /what’s trending/i, responses: ["I can't provide real-time trending topics, but you can check the latest trends on social media platforms or news websites."] },
-    { pattern: /how can I improve my productivity/i, responses: ["Here are a few tips: Set clear goals, prioritize tasks, take regular breaks, and minimize distractions. What specific area of productivity are you looking to improve?"] }
+    { pattern: /how can I improve my productivity/i, responses: ["Here are a few tips: Set clear goals, prioritize tasks, take regular breaks, and minimize distractions. What specific area of productivity are you looking to improve?"] },
+    { pattern: /who is your boss\?|who owns you\?|who do you work for\?/i, responses: ["I don't have a specific boss, but my creator is Griffin. I am being improved and monitored by Line Tech. Any more questions?"] }
 ];
-			document.addEventListener('DOMContentLoaded', () => {
-    const userInput = document.getElementById('userInput');
-    const sendMessageButton = document.querySelector('button');
 
-    // Function to send the message
-    function sendMessage() {
-        const message = userInput.value.trim();
-        if (message) {
-            // Add user message to chatbox
-            const chatbox = document.getElementById('chatbox');
-            const userMessageDiv = document.createElement('div');
-            userMessageDiv.className = 'user-message';
-            userMessageDiv.textContent = message;
-            chatbox.appendChild(userMessageDiv);
+const supportiveResponses = {
+    general: ["I'm here for you. Please tell me more.", "It's okay to feel this way. Let's talk about it."],
+    vent: ["It sounds like you've had a tough day. Want to tell me more about it?", "I'm here for you, feel free to vent."],
+    suicidal: ["I'm really sorry you're feeling this way. Please reach out to someone who can help.", "You don't have to go through this alone. Here’s the suicide prevention hotline: 1-800-273-8255."]
+};
 
-            // Simulate bot response (for demo purposes)
-            const botResponse = getBotResponse(message);
-            const botMessageDiv = document.createElement('div');
-            botMessageDiv.className = 'bot-message';
-            botMessageDiv.textContent = botResponse;
-            chatbox.appendChild(botMessageDiv);
+// Define the response types
+function getResponseType(userInput) {
+    if (/suicide|end it|no way out/i.test(userInput)) {
+        return 'suicidal';
+    }
+    if (/vent|talk|frustrated|bad day/i.test(userInput)) {
+        return 'vent';
+    }
+    return 'general';
+}
 
-            // Clear input field
-            userInput.value = '';
-            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to bottom
-        }
+// Function to send a message
+function sendMessage() {
+    const userInput = document.getElementById('userInput').value.trim();
+    if (userInput === '') return;
+
+    // Append user message to chatbox
+    const userMessageDiv = document.createElement('div');
+    userMessageDiv.classList.add('user-message');
+    userMessageDiv.textContent = userInput;
+    document.getElementById('chatbox').appendChild(userMessageDiv);
+
+    // Clear input field
+    document.getElementById('userInput').value = '';
+
+    // Scroll to bottom
+    scrollToBottom();
+
+    // Generate and append bot response
+    const botResponse = getBotResponse(userInput);
+    const botMessageDiv = document.createElement('div');
+    botMessageDiv.classList.add('bot-message');
+    botMessageDiv.textContent = botResponse;
+    document.getElementById('chatbox').appendChild(botMessageDiv);
+
+    // Scroll to bottom
+    scrollToBottom();
+}
+
+// Function to scroll to the bottom of the chatbox
+function scrollToBottom() {
+    const chatbox = document.getElementById('chatbox');
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+// Function to get the bot response
+function getBotResponse(message) {
+    const responseType = getResponseType(message);
+    if (responseType !== 'general') {
+        return supportiveResponses[responseType][Math.floor(Math.random() * supportiveResponses[responseType].length)];
     }
 
-    // Add event listener for Enter key press
-    userInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault(); // Prevent form submission if inside a form
+    for (const pair of pairs) {
+        if (pair.pattern.test(message)) {
+            const responses = pair.responses;
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+    }
+    return "Sorry, I didn't understand that.";
+}
+
+// Function to set up event listeners
+function setupEventListeners() {
+    // Add event listener for 'click' on the button with ID 'sendButton'
+    document.getElementById('sendButton').addEventListener('click', sendMessage);
+
+    // Add event listener for 'keypress' on the input with ID 'userInput'
+    document.getElementById('userInput').addEventListener('keypress', function (event) {
+        // Check if the 'Enter' key was pressed
+        if (event.key === 'Enter') {
             sendMessage();
         }
     });
 
-    // Add event listener for Send button click
-    sendMessageButton.addEventListener('click', sendMessage);
-});
-
-// Dummy function to simulate bot response
-function getBotResponse(userInput) {
-    // You should replace this with your actual logic
-    return `You said: ${userInput}`;
+    // Console log statements to confirm that the listeners have been added
+    console.log('Button click listener added');
+    console.log('Input keypress listener added');
 }
-const user_info = {
-    'name': null,
-    'awaiting_job_hunt_response': false
-};
 
-function getBotResponse(userInput) {
-    userInput = userInput.trim().toLowerCase();
+// Call the setupEventListeners function to set up the event listeners
+setupEventListeners();
 
-    // Handle user name setting
-    if (/my name is (.*)/i.test(userInput)) {
-        const match = /my name is (.*)/i.exec(userInput);
-        if (match) {
-            user_info['name'] = match[1].charAt(0).toUpperCase() + match[1].slice(1);
-            return user_info['name'].toLowerCase() === "kabelo samkelo kgosana"
-                ? `Hello Creator ${user_info['name']}! How may I assist you today?`
-                : `Hello ${user_info['name']}, How are you today?`;
-        }
-    }
-
-    // Handle responses based on patterns
-    for (let pair of pairs) {
-        if (pair.pattern.test(userInput)) {
-            const response = pair.responses[Math.floor(Math.random() * pair.responses.length)];
-            return response.replace(/%1/, user_info['name'] || "there");
-        }
-    }
-
-    return "Sorry, I didn’t understand that.";
-}
